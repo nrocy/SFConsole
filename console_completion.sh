@@ -57,6 +57,10 @@ _complete_sf2_app_console() {
     # Assume first word is the actual app/console command
     console="${COMP_WORDS[0]}"
 
+    if [[ ! -f ${console} ]]; then
+        return 1
+    fi
+
     if [[ ${COMP_CWORD} == 1 ]] ; then
         # No command found, return the list of available commands
         cmds=` ${console}  --no-ansi | sed -n -e '/^Available commands/,//p' | grep -n '^ ' | sed -e 's/^ \+//' | awk '{ print $2 }'`
